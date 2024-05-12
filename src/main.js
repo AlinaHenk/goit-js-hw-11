@@ -14,17 +14,13 @@ form.addEventListener("submit", performSearch);
 
 function performSearch(event) {
    event.preventDefault();
-  loader.classList.remove('is-hidden');
+   loader.classList.remove('is-hidden');
    const search = inputForm.value.trim();
-   console.log(search);
    allImages.innerHTML = "";
    if (search === '') {
       event.target.reset();
-      
-loader.classList.add('is-hidden');
-   }
-   else {
-      
+      loader.classList.add('is-hidden');
+   } else {
       fetchPictureBySearch(search)
          .then((imagesData) => {
             if (imagesData.total === 0) {
@@ -40,13 +36,11 @@ loader.classList.add('is-hidden');
             allImages.innerHTML = searchedGallery;
             let newGallery = new SimpleLightbox('.gallery-list a', { captionsData: 'alt', captionDelay: 250 });
             newGallery.refresh();
-          
          })
          .catch((error) => console.log(error))
          .finally(() => {
             event.target.reset();
-          loader.classList.add('is-hidden');
-
+            loader.classList.add('is-hidden');
          });
    }
 }
