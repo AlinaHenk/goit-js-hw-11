@@ -87,14 +87,14 @@ input:focus {
 
 .gallery-list {
   display: grid;
-  grid-template-columns: 348px 348px 348px 348px 348px;
+  grid-template-columns: 360px 360px 360px 360px;
   background: #fff;
   gap: 12 px;
   justify-content: space-around;
 }
 
 .gallery-image {
-  width: 334px;
+  width: 360px;
   height: 200px;
 }
 
@@ -172,4 +172,5 @@ table {
   border-color: #2b2525;
   margin-bottom: 24px;
   margin-left: 12px;
+  width: 360px;
 }
