@@ -94,7 +94,7 @@ input:focus {
 }
 
 .gallery-image {
-  width: 346px;
+  width: 334px;
   height: 200px;
 }
 
@@ -171,4 +171,5 @@ table {
   border-width: 1px;
   border-color: #2b2525;
   margin-bottom: 24px;
+  margin-left: 12px;
 }
