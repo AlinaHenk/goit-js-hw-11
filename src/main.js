@@ -1,19 +1,58 @@
+// Описаний у документації
+import iziToast from "izitoast";
+// Додатковий імпорт стилів
+import "izitoast/dist/css/iziToast.min.css";
+// Описаний у документації
+import SimpleLightbox from "simplelightbox";
+// Додатковий імпорт стилів
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+import { fetchPictureBySearch } from "./js/pixabay-api.js";
+import { createGallery } from "./js/render-functions.js";
 
 const inputForm = document.querySelector('input[name="search"]');
-
+const allImages = document.querySelector('.gallery-list');
 const form = document.querySelector('.form-image-search');
+const loader = document.querySelector('.loader');
 form.addEventListener("submit", performSearch);
-const key = '43769783-4ebd08048bd6758fdf84d5c5e'; 
 
 function performSearch(event) {
-    event.preventDefault();
-    fetch(`<https://pixabay.com/api?key=43769783-4ebd08048bd6758fdf84d5c5e&q=${inputForm.value}>`, {
-  headers: {
-            Host: 'pixabay.com'
- },
-}).then(response => {
-  console.log('trash',response);
-});
+   event.preventDefault();
+  loader.classList.remove('is-hidden');
+   const search = inputForm.value.trim();
+   console.log(search);
+   allImages.innerHTML = "";
+   if (search === '') {
+      event.target.reset();
+      
+loader.classList.add('is-hidden');
+   }
+   else {
+      
+      fetchPictureBySearch(search)
+         .then((imagesData) => {
+            if (imagesData.total === 0) {
+               iziToast.info({
+                  position: 'topRight',
+                  message: 'Sorry, there are no images matching your search query. Please try again!',
+                  color: 'red',
+                  timeout: 3000,
+               });
+               event.target.reset();
+            }
+            const searchedGallery = createGallery(imagesData.hits);
+            allImages.innerHTML = searchedGallery;
+            let newGallery = new SimpleLightbox('.gallery-list a', { captionsData: 'alt', captionDelay: 250 });
+            newGallery.refresh();
+          
+         })
+         .catch((error) => console.log(error))
+         .finally(() => {
+            event.target.reset();
+          loader.classList.add('is-hidden');
 
-};
-
+         });
+   }
+}
+            
+            
